@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <h1>Math &amp; Data Science Tutoring</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <main class="container narrow">
+        <section class="card">
+            <h2>Login</h2>
+            <div id="pageMessage" style="display:none"></div>
+
+            <form id="loginform" action="../php/login.php" method="post">
+                <label for="role">I am a</label>
+                <select name="role" id="role" required>
+                    <option value="">-- select --</option>
+                    <option value="student">Student</option>
+                    <option value="tutor">Tutor</option>
+                    <option value="admin">Administrator</option>
+                </select>
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required maxlength="100" autocomplete="username">
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required maxlength="72" autocomplete="current-password">
+
+                <button type="submit">Login</button>
+            </form>
+            <p>New student? <a href="register.html">Register here</a>.</p>
+        </section>
+    </main>
+    <script src="../js/validation.js"></script>
+    
+</body>
+</html>
