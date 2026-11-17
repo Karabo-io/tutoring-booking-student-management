@@ -39,7 +39,6 @@
                 redirect('tutor_dashboard.php');
             }
 
-            
             $chk = $pdo->prepare(
                 'SELECT COUNT(*) FROM tutor_availability
                 WHERE tutor_id = ? AND day_of_week = ? AND start_time < ? AND end_time > ?'
@@ -69,7 +68,6 @@
                 exit('Access denied. That availability does not belong to you.');
             }
 
-            // cannot remove a window that still has upcoming sessions inside it
             $busy = $pdo->prepare(
                 "SELECT COUNT(*) FROM bookings b
                 JOIN tutor_availability a ON a.availability_id = ? AND a.tutor_id = b.tutor_id
@@ -79,6 +77,7 @@
                 AND b.start_time >= a.start_time
                 AND ADDTIME(b.start_time, '01:00:00') <= a.end_time"
             );
+
             $busy->execute([$id]);
             if ((int)$busy->fetchColumn() > 0) {
                 flash('error', 'You still have upcoming sessions in that time window. Cancel or complete them first.');

@@ -136,7 +136,6 @@
         return $_SESSION['user'] ?? null;
     }
 
-    // call at the top of every protected page: require_role(['admin']);
     function require_role(array $roles): void {
         $user = current_user();
         if ($user === null) {

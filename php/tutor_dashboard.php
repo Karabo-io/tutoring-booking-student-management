@@ -35,13 +35,13 @@
     foreach ($rows as $r) {
         $time = substr($r['start_time'], 0, 5);
         $bookings[] = [
-            'id'        => (int)$r['booking_id'],
-            'date'      => $r['session_date'],
-            'day'       => date('l', strtotime($r['session_date'])),
-            'time'      => $time,
+            'id' => (int)$r['booking_id'],
+            'date' => $r['session_date'],
+            'day' => date('l', strtotime($r['session_date'])),
+            'time' => $time,
             'programme' => $r['programme_name'],
-            'person'    => $r['student_name'],
-            'status'    => $r['status'],
+            'person' => $r['student_name'],
+            'status' => $r['status'],
         ];
         if ($r['status'] === 'Confirmed') {
             $updatable[] = [
