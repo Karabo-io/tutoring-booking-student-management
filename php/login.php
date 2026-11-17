@@ -18,7 +18,7 @@
                       FROM students WHERE email = ?",
         'tutor' => "SELECT tutor_id AS id, CONCAT(first_name, ' ', last_name) AS name, password_hash
                     FROM tutors WHERE email = ?",
-        'admin' => "SELECT admin_id AS id, CONCAT(first_name, ' ',last_name) AS name, password_hash
+        'admin' => "SELECT admin_id AS id, full_name AS name, password_hash
                     FROM administrators WHERE email = ?" 
     ];
 
@@ -29,14 +29,14 @@
     ];
 
     if(!isset($queries[$role]) ||  $email === '' || $password === '') {
-        redirect('../html/loogin.html?msg=invalid_login');
+        redirect('../html/login.html?msg=invalid_login');
     }
 
     $stmt = db()->prepare($queries[$role]);
-    $stmt->execute(['email']);
+    $stmt->execute([$email]);
     $user = $stmt->fetch();
 
-    if($user && password_verify(password, $user['password_hash'])) {
+    if($user && password_verify($password, $user['password_hash'])) {
         session_regenerate_id(true);
         unset($_SESSION['fails'], $_SESSION['lock_until']);
         $_SESSION['user'] = [

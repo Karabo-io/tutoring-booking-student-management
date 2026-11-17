@@ -23,26 +23,26 @@
 
     $pdo = db();
 
-    $check = $pdo-prepare('SELECT 1 FROM students WHERE email = ?');
-    $check->execute(['email']);
+    $check = $pdo->prepare('SELECT 1 FROM students WHERE email = ?');
+    $check->execute(['$email']);
     if($check->fetchColumn()) {
-        redirect('../html/register,html?msg=email_taken');
+        redirect('../html/register.html?msg=email_taken');
     }
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     try{
-        $stmt = $pdo-prepare(
-            'INSERT INTO students (first_name, last_name, email, phone, password_hash) VALUES ?, ?, ?, ?, ?'
+        $stmt = $pdo->prepare(
+            'INSERT INTO students (first_name, last_name, email, phone, password_hash) VALUES (?, ?, ?, ?, ?)'
         );
-        $stmt->execute($first, $last, $email, $phone, $hash);
+        $stmt->execute([$first, $last, $email, $phone, $hash]);
     } catch (PDOException $e) {
         if((int)($e->errorInfo[1] ?? 0) === 1062){
             redirect('../html/register.html?msg=email_taken');
         }
 
         error_log('register failed: ' . $e->getMessage());
-        error_page(['Somethign went wrong while creating your account. Please try again.'], '../html/register.html');
+        error_page(['Something went wrong while creating your account. Please try again.'], '../html/register.html');
     }
 
     redirect('../html/register.html?msg=registered');

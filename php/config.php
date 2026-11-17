@@ -20,10 +20,10 @@
 
     $env = load_env(__DIR__ . '/../.env');
 
-    define('DB_HOST', $env['DB_HOST']);
-    define('DB_NAME', $env['DB_NAME']);
-    define('DB_USER', $env['DB_USER']);
-    define('DB_PASS', $env['DB_PASS']);
+    define('DB_HOST', $env['DB_HOST'] ?? '');
+    define('DB_NAME', $env['DB_NAME'] ?? '');
+    define('DB_USER', $env['DB_USER'] ?? '');
+    define('DB_PASS', $env['DB_PASS'] ?? '');
 
     // cookie settings have to be set before session_start()
     session_set_cookie_params([
@@ -47,6 +47,7 @@
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::ATTR_EMULATE_PREPARES => false,   
                 ]);
+                //echo "Successfully Connected.";
             } catch (PDOException $e) {
                 error_log('DB connection failed' . $e->getMessage());
                 http_response_code(500);

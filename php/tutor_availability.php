@@ -8,7 +8,7 @@
     check_csrf();
 
     $pdo = db();
-    $tutorId = (int)['user']['id'];
+    $tutorId = (int)$_SESSION['user']['id'];
     $action = post_str('action');
 
     try{
